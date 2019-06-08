@@ -4,27 +4,9 @@ const axios = require('axios');
 const xmlParser = require('fast-xml-parser');
 const MongoClient = require('mongodb').MongoClient;
 
+const typeDefs = require('./gql-types.js')
+
 const client = new MongoClient('mongodb://localhost:27017');
-
-const typeDefs = gql`
-  type Query {
-    placeholder: [Article]!
-    theverge: [Article]!
-    arstechnica: [Article]!
-    articles: [Article]!
-  }
-  type Article {
-    id: ID!
-    title: String
-    snippet: String,
-    body: String,
-    url: String,
-    publishedTime: Float,
-    publisher: String,
-  }
-`;
-
-
 
 class TheVergeRSS {
   async getNewArticles() {
@@ -46,7 +28,7 @@ class TheVergeRSS {
         publisher: 'theverge',
         publishedTime: a.published,
         timestamp: Date.now(),
-      }))
+      }));
       
       const bulkInsert = newArticles.map(a => ({ updateOne: { filter: { id: a.id }, update: { $set: a }, upsert: true } }))
 
@@ -133,14 +115,16 @@ const resolvers = {
 
       return articles
     },
-    theverge: async (_, __, ___) => {
+    theverge: async (_, __, context) => {
+      const db = client.db("test");
       await context.dataSources.thevergeRSS.getNewArticles()
       const articles = await db.collection('articles').find({ publisher: 'theverge' }).toArray()
 
       return articles
 
     },
-    arstechnica: async (_, __, ___) => {
+    arstechnica: async (_, __, context) => {
+      const db = client.db("test");
       await context.dataSources.arstechnicaRSS.getNewArticles()
       const articles = await db.collection('articles').find({ publisher: 'arstechnica' }).toArray()
 
