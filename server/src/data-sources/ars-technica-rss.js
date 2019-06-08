@@ -1,5 +1,5 @@
-const axios = require('axios');
-const xmlParser = require('fast-xml-parser');
+const axios = require('axios')
+const xmlParser = require('fast-xml-parser')
 
 const updateArticles = require('./data-source-service')
 

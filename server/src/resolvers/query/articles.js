@@ -1,7 +1,7 @@
 const { client } = require("../../mongo")
 
 async function articleResolver(_, __, context) {
-  const db = client.db("test");
+  const db = client.db("test")
 
   await context.dataSources.thevergeRSS.getNewArticles()
   await context.dataSources.arstechnicaRSS.getNewArticles()

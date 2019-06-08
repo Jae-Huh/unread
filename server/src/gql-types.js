@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server")
 
  const typeDefs = gql`
   type Query {
@@ -16,6 +16,6 @@ const { gql } = require("apollo-server");
     publishedTime: Float,
     publisher: String,
   }
-`;
+`
 
-module.exports = typeDefs;
+module.exports = typeDefs

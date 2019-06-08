@@ -1,5 +1,5 @@
-const axios = require('axios');
-const xmlParser = require('fast-xml-parser');
+const axios = require('axios')
+const xmlParser = require('fast-xml-parser')
 
 const updateArticles = require('./data-source-service')
 
@@ -17,7 +17,7 @@ class TheVergeRSS {
         publisher: 'theverge',
         publishedTime: a.published,
         timestamp: Date.now(),
-      }));
+      }))
       return newArticles
     }
 
