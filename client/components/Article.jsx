@@ -18,12 +18,16 @@ const Title = styled.h1`
   font-weight: 400;
 `;
 
-const Snippet = styled.p`
+const Snippet = styled.div`
 `;
 
 
 function Article(props) {
-  const { publisher, title, snippet, url } = props
+  const { publisher, title, snippet, htmlSnippet, url } = props
+
+  function getHtmlSnippet() {
+    return { __html: htmlSnippet };
+  }
 
   return (
     <ButtonBase href={url}>

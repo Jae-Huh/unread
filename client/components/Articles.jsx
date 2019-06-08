@@ -30,7 +30,7 @@ function Articles() {
           {
             data.articles.map(a => {
               return (
-                <Article title={a.title} snippet={a.snippet} url={a.url} publisher={a.publisher} />
+                <Article key={a.url} title={a.title} snippet={a.snippet} url={a.url} publisher={a.publisher} />
               )
             })
           }
