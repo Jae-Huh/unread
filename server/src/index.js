@@ -4,27 +4,15 @@ const typeDefs = require('./gql-types.js')
 const TheVergeRSS = require('./data-sources/the-verge-rss')
 const ArsTechnicaRSS = require('./data-sources/ars-technica-rss')
 const articlesResolver = require('./resolvers/query/articles')
+const thevergeResolver = require('./resolvers/query/theverge')
+const arstechnicaResolver = require('./resolvers/query/arstechnica')
 const { client } = require('./mongo.js');
 
 const resolvers = {
   Query: {
-    placeholder: (_, __, { dataSources }) => dataSources.jsonPlaceholderAPI.getAllPosts(),
     articles: articlesResolver,
-    theverge: async (_, __, context) => {
-      const db = client.db("test");
-      await context.dataSources.thevergeRSS.getNewArticles()
-      const articles = await db.collection('articles').find({ publisher: 'theverge' }).toArray()
-
-      return articles
-
-    },
-    arstechnica: async (_, __, context) => {
-      const db = client.db("test");
-      await context.dataSources.arstechnicaRSS.getNewArticles()
-      const articles = await db.collection('articles').find({ publisher: 'arstechnica' }).toArray()
-
-      return articles
-    },
+    theverge: thevergeResolver,
+    arstechnica: arstechnicaResolver,
   }
 }
 
