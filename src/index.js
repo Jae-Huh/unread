@@ -18,6 +18,8 @@ const typeDefs = gql`
     snippet: String,
     body: String,
     url: String,
+    publishedTime: Float,
+    publisher: String,
   }
 `;
 
@@ -49,39 +51,78 @@ const resolvers = {
   Query: { 
     placeholder: (_, __, { dataSources }) => dataSources.jsonPlaceholderAPI.getAllPosts(),
     theverge: async (_, __, { dataSources }) => {
-      const vergeRSS = await axios.get('https://www.theverge.com/rss/index.xml')
-      const json = xmlParser.parse(vergeRSS.data)
-      return json.feed.entry.map(article => ({ id: article.id, title: article.title, body: article.content}))
+      const db = client.db("test");
+
+      const lastUpdatedObject = await db.collection('lastUpdated').findOne({ name: "theverge" })
+      const lastUpdatedTime = lastUpdatedObject.time
+
+      // If there the articles haven't been upddate for x minutes. Get them from RSS feed.
+      const minutes = 5 * 60000 // 5minutes in ms
+      if (new Date().getTime() > lastUpdatedTime + minutes) {
+        const vergeRSS = await axios.get('https://www.theverge.com/rss/index.xml')
+        const json = xmlParser.parse(vergeRSS.data)
+        const newArticles = json.feed.entry.map(a => ({ 
+          id: a.id, 
+          url: a.id, 
+          title: a.title, 
+          snippet: '',
+          body: a.content,
+          publisher: 'theverge',
+          publishedTime: new Date.parse(a.published).getTime(),
+          timestamp: Date.now(),
+        }))
+        
+        const bulkInsert = newArticles.map(a => ({ updateOne: { filter: { id: a.id }, update: { $set: a }, upsert: true } }))
+
+        await db.collection('lastUpdated').updateOne(
+          { name: "theverge" },
+          { $set: { name: "theverge", time: Date.now() } },
+          { upsert: true }
+        );
+
+        await db.collection('articles').bulkWrite(bulkInsert);
+        console.log("Updating from RSS Feed")
+      }
+
+      const articles = await db.collection('articles').find({ publisher: 'theverge' }).toArray()
+
+      return articles
+
     },
     arstechnica: async (_, __, { dataSources }) => {
-      // const client = new MongoClient('mongodb://localhost:27017');
-      // await client.connect();
       const db = client.db("test");
 
       const lastUpdatedObject = await db.collection('lastUpdated').findOne({name: "arstechnica"})
       const lastUpdatedTime = lastUpdatedObject.time
 
-
       const minutes = 5 * 60000 // 5minutes in ms
       if (new Date().getTime() > lastUpdatedTime + minutes) {
         const arsRSS = await axios.get('https://feeds.feedburner.com/arstechnica/index')
         const json = xmlParser.parse(arsRSS.data)
-        const newArticles = json.rss.channel.item.map(article => ({ id: article.guid, url: article.guid, title: article.title, snippet: article.description, body: article['content:encoded']}))
+        const newArticles = json.rss.channel.item.map(a => ({ 
+          id: a.guid, 
+          url: a.guid, 
+          title: a.title, 
+          snippet: a.description, 
+          body: a['content:encoded'],
+          publisher: 'arstechnica',
+          publishedTime: new Date(a.pubDate).getTime(),
+          timestamp: Date.now(),
+        }))
         
-        const bulkInsert = newArticles.map(a => ({ updateOne: { filter: {id: a.id}, update: {$set: a }, upsert:true } }))
+        const bulkInsert = newArticles.map(a => ({ updateOne: { filter: {id: a.id}, update: {$set: a }, upsert: true } }))
         
         await db.collection('lastUpdated').updateOne(
           {name: "arstechnica"}, 
-          {$set: {name: "arstechnica", time: new Date().getTime() }}, 
+          {$set: {name: "arstechnica", time: Date.now() }},
           {upsert: true}
         );
 
-        // await db.collection('articles').insertMany(newArticles);
         await db.collection('articles').bulkWrite(bulkInsert);
         console.log("Updating from RSS Feed")
       }
 
-      const articles = await db.collection('articles').find().toArray()
+      const articles = await db.collection('articles').find({ publisher: 'arstechnica' }).toArray()
 
       return articles
     },
