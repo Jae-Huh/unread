@@ -8,7 +8,7 @@ const Page = styled.div`
 `
 
 const Header = styled.div`
-  padding: 16px 24px;
+  padding: 16px 24px 6px;
   font-size: 42px;
   font-weight: bold;
   color: ${teal.A700};

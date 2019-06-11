@@ -9,8 +9,11 @@ const ButtonBase = styled(MuiButtonBase)`
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 24px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
+  padding: 10px 24px 12px;
 `
 
 const Publisher = styled.span`
@@ -53,6 +56,7 @@ function Article(props) {
           </Snippet>
         </Wrapper>
       </ButtonBase>
+
       <Divider variant="middle" />
     </Fragment>
   )
