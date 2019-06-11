@@ -1,25 +1,38 @@
-import React from 'react'
-import styled from 'styled-components';
-import MuiPaper from '@material-ui/core/Paper';
-import ButtonBase from "@material-ui/core/ButtonBase"
- 
-const Paper = styled(MuiPaper)`
-  padding: 12px 16px 16px;
-  margin-bottom: 12px;
+import React, { Fragment } from 'react'
+import styled from 'styled-components'
+import MuiButtonBase from '@material-ui/core/ButtonBase'
+import MuiDivider from '@material-ui/core/Divider'
+import { grey, amber } from '@material-ui/core/colors'
+
+const ButtonBase = styled(MuiButtonBase)`
+  width: 100%;
 `;
+
+const Wrapper = styled.div`
+  padding: 10px 24px 12px;
+  width: 100%;
+`
 
 const Publisher = styled.span`
   font-size: 12px;
-`;
+  color: ${amber.A700};
+`
 
 const Title = styled.h1`
-  margin: 8px 0;
+  margin: 6px 0;
   font-size: 20px;
   font-weight: 400;
-`;
+`
 
-const Snippet = styled.div`
-`;
+const Snippet = styled.p`
+  font-size: 14px;
+`
+
+const Divider = styled(MuiDivider)`
+  && {
+    background-color: ${grey[700]}
+  }
+`
 
 
 function Article(props) {
@@ -30,15 +43,18 @@ function Article(props) {
   }
 
   return (
-    <ButtonBase href={url}>
-      <Paper>
-        <Publisher>{publisher}</Publisher>
-        <Title>{title}</Title>
-        <Snippet>
-          {snippet}
-        </Snippet>
-      </Paper>
-    </ButtonBase>
+    <Fragment>
+      <ButtonBase href={url}>
+        <Wrapper>
+          <Publisher>{publisher}</Publisher>
+          <Title>{title}</Title>
+          <Snippet>
+            {snippet}
+          </Snippet>
+        </Wrapper>
+      </ButtonBase>
+      <Divider variant="middle" />
+    </Fragment>
   )
 }
 

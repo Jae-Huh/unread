@@ -1,7 +1,6 @@
 import React from 'react'
-import styled from 'styled-components';
-import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
+import { Query } from 'react-apollo'
+import { gql } from 'apollo-boost'
 
 import Article from './Article'
 

@@ -1,21 +1,20 @@
-import styled from 'styled-components';
-import { blueGrey } from '@material-ui/core/colors';
+import styled from 'styled-components'
+import { grey, teal } from '@material-ui/core/colors'
 
 import Articles from '../components/Articles'
 
 const Page = styled.div`
-  background-color: ${blueGrey[50]};
+  background-color: ${grey[900]};
   min-height: 100vh;
-`;
+  color: white;
+`
 
 const Header = styled.div`
-  font-size: 40px;
-  font-weight: 500;
-`;
-
-const Body = styled.div`
-  padding: 16px;
-`;
+  padding: 16px 24px;
+  font-size: 42px;
+  font-weight: bold;
+  color: ${teal.A700};
+`
 
 function Home() {
   return (
@@ -23,9 +22,9 @@ function Home() {
       <Header>
         Unread
       </Header>
-      <Body>
+      <div>
         <Articles />
-      </Body>
+      </div>
     </Page>
   );
 }
