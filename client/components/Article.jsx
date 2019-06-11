@@ -6,7 +6,7 @@ import { grey, amber } from '@material-ui/core/colors'
 
 const ButtonBase = styled(MuiButtonBase)`
   width: 100%;
-`;
+`
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,12 +37,11 @@ const Divider = styled(MuiDivider)`
   }
 `
 
-
 function Article(props) {
   const { publisher, title, snippet, htmlSnippet, url } = props
 
   function getHtmlSnippet() {
-    return { __html: htmlSnippet };
+    return { __html: htmlSnippet }
   }
 
   return (

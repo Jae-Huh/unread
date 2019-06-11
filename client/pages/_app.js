@@ -4,12 +4,12 @@ import App, { Container } from 'next/app'
 import ApolloClient from 'apollo-boost'
 import { grey } from '@material-ui/core/colors'
 
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from 'react-apollo'
 
 
 const client = new ApolloClient({
   uri: "http://localhost:4000"
-});
+})
 
 class Layout extends React.Component {
   render () {

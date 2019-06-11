@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import styled from 'styled-components'
 import { teal } from '@material-ui/core/colors'
 
@@ -24,7 +25,7 @@ function Home() {
         <Articles />
       </div>
     </Page>
-  );
+  )
 }
 
 export default Home
