@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { blueGrey } from '@material-ui/core/colors'; 
+import { blueGrey } from '@material-ui/core/colors';
 
 import Articles from '../components/Articles'
- 
+
 const Page = styled.div`
-  background-color: ${blueGrey[50]}; 
+  background-color: ${blueGrey[50]};
   min-height: 100vh;
 `;
 
@@ -21,7 +21,7 @@ function Home() {
   return (
     <Page>
       <Header>
-        Newsly
+        Unread
       </Header>
       <Body>
         <Articles />
