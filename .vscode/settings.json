@@ -1,9 +1,0 @@
-{
-  "workbench.colorCustomizations": {
-    "editorError.foreground": "#00000000",
-    "editorError.border": "#b10000",
-    "tab.activeBackground": "#36534b",
-    "tab.activeForeground": "#fff",
-    "diffEditor.insertedTextBackground": "#03570028"
-  }
-}
