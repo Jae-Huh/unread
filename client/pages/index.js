@@ -1,12 +1,10 @@
 import styled from 'styled-components'
-import { grey, teal } from '@material-ui/core/colors'
+import { teal } from '@material-ui/core/colors'
 
 import Articles from '../components/Articles'
 
 const Page = styled.div`
-  background-color: ${grey[900]};
   min-height: 100vh;
-  color: white;
 `
 
 const Header = styled.div`

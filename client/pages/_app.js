@@ -1,7 +1,8 @@
-import 'isomorphic-unfetch';
+import 'isomorphic-unfetch'
 import React from 'react'
 import App, { Container } from 'next/app'
-import ApolloClient from "apollo-boost";
+import ApolloClient from 'apollo-boost'
+import { grey } from '@material-ui/core/colors'
 
 import { ApolloProvider } from "react-apollo";
 
@@ -22,6 +23,10 @@ class Layout extends React.Component {
             margin: 0;
             padding: 0;
             font-family: sans-serif;
+          }
+          body {
+            background-color: ${grey[900]};
+            color: ${grey[300]};
           }
         `}
       </style>
